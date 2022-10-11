@@ -40,7 +40,7 @@ class ListingsList(TemplateView):
 
 class ListingsCreate(CreateView):
     model = Listing
-    fields = ['name', 'img', 'bio']
+    fields = ['name', 'img', 'ships_from', 'price', 'condition', 'shipping_details', 'delivery', 'returns', 'payments', 'authenticity', 'money_back', 'seller_information']
     template_name = "listings_create.html"
     def get_success_url(self):
         return reverse('listings_detail', kwargs={'pk': self.object.pk})
@@ -51,7 +51,7 @@ class ListingsDetail(DetailView):
 
 class ListingsUpdate(UpdateView):
     model = Listing
-    fields = ['name', 'img', 'bio']
+    fields = ['name', 'img', 'ships_from', 'price', 'condition', 'shipping_details', 'delivery', 'returns', 'payments', 'authenticity', 'money_back', 'seller_information']
     template_name = "listings_update.html"
     def get_success_url(self):
         return reverse('listings_detail', kwargs={'pk': self.object.pk})
