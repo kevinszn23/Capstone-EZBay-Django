@@ -16,7 +16,7 @@
 </form>
 <div class="gallery">
   {% for listing in listings %}
-  <a href="">
+  <a href="{% url 'listings_detail' listing.pk %}">
     <div class="card">
       <div class="card-image">
         <figure class="image is-square">

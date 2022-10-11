@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from .models import Listing
 from django.views.generic.edit import CreateView
+from django.views.generic import DetailView
 
 # Create your views here.
 
@@ -41,3 +42,6 @@ class ListingsCreate(CreateView):
     fields = ['name', 'img', 'bio']
     template_name = "listings_create.html"
     success_url = "/listings/"
+class ListingsDetail(DetailView):
+    model = Listing
+    template_name = "listings_detail.html"
