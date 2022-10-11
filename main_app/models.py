@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Listing(models.Model):
@@ -16,6 +17,7 @@ class Listing(models.Model):
     money_back = models.TextField(max_length=500, default="Get the item you ordered or get your money back.")
     seller_information = models.TextField(max_length=500, default="codingconnoseiur23 (999 ✭), 99.3% Positive feedback")
     created_at = models.DateTimeField(auto_now_add=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     
     def __str__(self):
         return self.name
