@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from .models import Listing
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
-from .models import Listing
-from django.views.generic.edit import CreateView
+from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic import DetailView
+from django.urls import reverse
 
 # Create your views here.
 
@@ -41,7 +42,16 @@ class ListingsCreate(CreateView):
     model = Listing
     fields = ['name', 'img', 'bio']
     template_name = "listings_create.html"
-    success_url = "/listings/"
+    def get_success_url(self):
+        return reverse('listings_detail', kwargs={'pk': self.object.pk})
+
 class ListingsDetail(DetailView):
     model = Listing
     template_name = "listings_detail.html"
+
+class ListingsUpdate(UpdateView):
+    model = Listing
+    fields = ['name', 'img', 'bio']
+    template_name = "listings_update.html"
+    def get_success_url(self):
+        return reverse('listings_detail', kwargs={'pk': self.object.pk})
