@@ -3,6 +3,7 @@ from django.views import View
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
 from .models import Listing
+from django.views.generic.edit import CreateView
 
 # Create your views here.
 
@@ -34,3 +35,9 @@ class ListingsList(TemplateView):
             context["listings"] = Listing.objects.all()
             context["header"] = f"Searching for {name}"
         return context
+
+class ListingsCreate(CreateView):
+    model = Listing
+    fields = ['name', 'img', 'bio']
+    template_name = "listings_create.html"
+    success_url = "/listings/"
