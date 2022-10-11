@@ -3,7 +3,7 @@ from .models import Listing
 from django.views import View
 from django.http import HttpResponse
 from django.views.generic.base import TemplateView
-from django.views.generic.edit import CreateView, UpdateView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.views.generic import DetailView
 from django.urls import reverse
 
@@ -55,3 +55,8 @@ class ListingsUpdate(UpdateView):
     template_name = "listings_update.html"
     def get_success_url(self):
         return reverse('listings_detail', kwargs={'pk': self.object.pk})
+
+class ListingsDelete(DeleteView):
+    model = Listing
+    template_name = "listings_delete_confirmation.html"
+    success_url = "/listings/"
