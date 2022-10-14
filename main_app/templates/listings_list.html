@@ -15,19 +15,21 @@
   <a class="button is-dark" href="{% url 'listings_create' %}">Add a Listing</a>
 </form>
 <div class="gallery">
-  {% for listing in listings %}
-  <a href="{% url 'listings_detail' listing.pk %}">
+  {% for listing in api %}
+  {% comment %} <a href="{% url 'listings_detail' listing.pk %}"> {% endcomment %}
+    # remove ^^
     <div class="card">
       <div class="card-image">
         <figure class="image is-square">
-          <img src="{{listing.image}}" alt="{{listing.name}}" />
+          <img src="{{listing.galleryURL}}" alt="{{listing.title}}" />
+          # conditional needed for any attributes that might not be coming in from the API query
         </figure>
       </div>
       <div class="card-header">
-        <p class="card-header-title">{{listing.name}}</p>
+        <p class="card-header-title">{{listing.title}}</p>
       </div>
     </div>
-  </a>
+  {% comment %} </a> {% endcomment %}
   {% endfor %}
 </div>
 

@@ -11,6 +11,11 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
+import os
+import datetime
+import sys
+from ebaysdk.finding import Connection
+from ebaysdk.exception import ConnectionError
 
 # Create your views here.
 
@@ -19,7 +24,7 @@ class Home(TemplateView):
 
 class About(TemplateView):
     template_name = "about.html"
-    
+
 @method_decorator(login_required, name='dispatch')
 class ListingsList(TemplateView):
     template_name = "listings_list.html"
@@ -27,13 +32,66 @@ class ListingsList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name")
-        if name != None:
-            context["artists"] = Listing.objects.filter(name__icontains=name, user=self.request.user)
+        print("testing name", name)
+        if name == None:
+            # context["listings"] = Listing.objects.filter(name__icontains=name, user=self.request.user)
+            #api call here, set value here ^^^
+            # for item in api
+            # if __name__ == "__main__":
             context["header"] = f"Searching for {name}"
         else:
-            context["listings"] = Listing.objects.filter(user=self.request.user)
-            context["header"] = f"Searching for {name}"
+            # st = sys.argv[1]
+            print(name)
+            e = ebay_api(API_KEY, name)
+            context["api"] = e.fetch()
+            e.parse()
+            print(context["api"])
+            # context["listings"] = Listing.objects.filter(user=self.request.user)
+            # context["header"] = f"Searching for {name}"
         return context
+
+from dotenv import load_dotenv
+load_dotenv()
+API_KEY=os.getenv("api_key")
+
+class ebay_api(object):
+    def __init__(self, API_KEY, st):
+        self.api_key = API_KEY
+        self.st = st
+
+    def fetch(self):
+        try:
+            api = Connection(appid=self.api_key, config_file=None, siteid="EBAY-US")
+            response = api.execute('findItemsAdvanced', {'keywords': self.st})
+            # print(response.reply)
+            # print(f"Total items: {response.reply.paginationOutput.totalEntries}\n")
+
+            # for item in response.reply.searchResult.item:
+            #     print(f"Title: {item.title}, Price: {item.sellingStatus.currentPrice.value}")
+            #     # print(f"Condition: {item.condition.conditionDisplayName}")
+            #     print(f"Buy it now: {item.listingInfo.buyItNowAvailable}")
+            #     print(f"Country: {item.country}")
+            #     print(f"End time: {item.listingInfo.endTime}")
+            #     print(f"URL: {item.viewItemURL}")
+            #     try:
+            #         print(f"Watchers: {item.listingInfo.watchCount}\n")
+            #     except:
+            #         pass
+
+            return response.reply.searchResult.item
+
+        except ConnectionError as e:
+            print(e)
+            print(e.response.dict())
+
+    def parse(self):
+        pass
+
+# if __name__ == "__main__":
+#     st = sys.argv[1]
+#     e = ebay_api(API_KEY, st)
+#     e.fetch()
+#     e.parse()
 
 class ListingsCreate(CreateView):
     model = Listing
@@ -73,7 +131,7 @@ class Signup(View):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect("artist_list")
+            return redirect("listings_list")
         else:
             context = {"form": form}
             return render(request, "registration/signup.html", context)
