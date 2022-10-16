@@ -15,31 +15,34 @@
   <a class="button is-dark" href="{% url 'listings_create' %}">Add a Listing</a>
 </form>
 <div class="gallery">
-  {% for listing in api %}
-  {% comment %} <a href="{% url 'listings_detail' listing.pk %}"> {% endcomment %}
+  {% for listing in listings %}
+  <a href="{% url 'listings_detail' listing.pk %}">
+    {% comment %} {% for listing in api %} {% endcomment %}
     <div class="card">
       <div class="card-image">
         <figure class="image is-square">
-          <img src="{{listing.galleryURL}}" alt="{{listing.title}}" />
-          {% comment %} conditional needed for any attributes that might not be coming in from the API query {% endcomment %}
+          <img src="{{listing.img}}" alt="{{listing.name}}" />
+          {% comment %} <img src="{{listing.galleryURL}}" alt="{{listing.title}}" /> {% endcomment %}
         </figure>
       </div>
       <div class="card-header">
-        <p class="card-header-title">{{listing.title}}</p>
-        <p>{{listing.condition.conditionDisplayName}}</p>
+        <p class="card-header-title">{{listing.name}}</p>
+        {% comment %} <p class="card-header-title">{{listing.title}}</p> {% endcomment %}
+        {% comment %} <p>{{listing.condition.conditionDisplayName}}</p> {% endcomment %}
         {% comment %} <p>{{listing.sellerInfo.feedbackScore}}</p> {% endcomment %}
         {% comment %} <p>{{listing.listingInfo.buyItNowAvailable}}</p> {% endcomment %}
       </div>
       <div>
-      <p>{{listing.sellingStatus.currentPrice.value}}</p>
+      {% comment %} <p>{{listing.sellingStatus.currentPrice.value}}</p> {% endcomment %}
 
-      {% if listing.listingInfo.bestOfferEnabled == "true" %}
+      {% comment %} {% if listing.listingInfo.bestOfferEnabled == "true" %}
       Buy it Now
       {% endif %}
-      <p>+ {{listing.shippingInfo.shippingServiceCost.value}} shipping</p>
+      <p>+ {{listing.shippingInfo.shippingServiceCost.value}} shipping</p> {% endcomment %}
       
       
       </div>
+    </a>
     </div>
   {% comment %} </a> {% endcomment %}
   {% endfor %}

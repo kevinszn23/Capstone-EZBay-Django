@@ -10,5 +10,5 @@ urlpatterns = [
     path('listings/<int:pk>/update',views.ListingsUpdate.as_view(), name="listings_update"),
     path('listings/<int:pk>/delete',views.ListingsDelete.as_view(), name="listings_delete"),
     path('accounts/signup/', views.Signup.as_view(), name="signup"),
-    path('listings/itemId/', views.ListingsItemId.as_view(), name="listings_itemId"),
+    # path('listings/itemId/', views.itemId, name="listings_itemId"),
 ]

@@ -15,6 +15,7 @@ from django.utils.decorators import method_decorator
 import os
 import datetime
 import sys
+import requests
 from ebaysdk.finding import Connection
 from ebaysdk.exception import ConnectionError
 
@@ -33,37 +34,44 @@ class ListingsList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name")
-        # print("testing name", name)
-        if name == None:
-            # context["listings"] = Listing.objects.filter(name__icontains=name, user=self.request.user)
-            #api call here, set value here ^^^
-            # for item in api
-            # if __name__ == "__main__":
+        if name != None:
+            context["listings"] = Listing.objects.filter(name__icontains=name)
             context["header"] = f"Searching for {name}"
         else:
-            # st = sys.argv[1]
-            print(name)
-            e = ebay_api(API_KEY, name)
-            context["api"] = e.fetch()
-            e.parse()
-            print(context["api"])
-            # context["listings"] = Listing.objects.filter(user=self.request.user)
-            # context["header"] = f"Searching for {name}"
+            context["listings"] = Listing.objects.all()
+            context["header"] = f"Searching for {name}"
         return context
 
-from dotenv import load_dotenv
-load_dotenv()
-API_KEY=os.getenv("api_key")
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     name = self.request.GET.get("name")
+    #     if name == None:
+    #         context["header"] = f"Searching for {name}"
+    #     else:
+    #         print(name)
+    #         e = ebay_search_api(API_KEY, name)
+    #         context["api"] = e.fetch()
+    #         e.parse()
+    #         print(context["api"])
+    #     return context
+    
+# def itemId(request):
+#     response=requests.get("https://api.ebay.com/buy/browse/v1/item/{item.id}").json()
+#     return render(request,"listings_itemId.html",{"response": response})
 
-class ebay_api(object):
-    def __init__(self, API_KEY, st):
-        self.api_key = API_KEY
-        self.st = st
+# from dotenv import load_dotenv
+# load_dotenv()
+# API_KEY=os.getenv("api_key")
 
-    def fetch(self):
-        try:
-            api = Connection(appid=self.api_key, config_file=None, siteid="EBAY-US")
-            response = api.execute('findItemsAdvanced', {'keywords': self.st})
+# class ebay_search_api(object):
+#     def __init__(self, API_KEY, st):
+#         self.api_key = API_KEY
+#         self.st = st
+
+#     def fetch(self):
+#         try:
+#             api = Connection(appid=self.api_key, config_file=None, siteid="EBAY-US")
+#             response = api.execute('findItemsAdvanced', {'keywords': self.st})
             # print(response.reply)
             # print(f"Total items: {response.reply.paginationOutput.totalEntries}\n")
 
@@ -79,14 +87,14 @@ class ebay_api(object):
             #     except:
             #         pass
 
-            return response.reply.searchResult.item
+    #         return response.reply.searchResult.item
 
-        except ConnectionError as e:
-            print(e)
-            print(e.response.dict())
+    #     except ConnectionError as e:
+    #         print(e)
+    #         print(e.response.dict())
 
-    def parse(self):
-        pass
+    # def parse(self):
+    #     pass
 
 # if __name__ == "__main__":
 #     st = sys.argv[1]
@@ -94,8 +102,10 @@ class ebay_api(object):
 #     e.fetch()
 #     e.parse()
 
-class ListingsItemId(TemplateView):
-    template_name = "listings_itemId.html"
+
+# class ListingsItemId(TemplateView):
+#     template_name = "listings_itemId.html"
+
 
 class ListingsCreate(CreateView):
     model = Listing
