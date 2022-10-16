@@ -17,16 +17,17 @@ class ebay_api(object):
         try:
             api = Connection(appid=self.api_key, config_file=None, siteid="EBAY-US")
             response = api.execute('findItemsAdvanced', {'keywords': st})
-            # print(response.reply)
+            print(response.reply)
             print(f"Total items: {response.reply.paginationOutput.totalEntries}\n")
 
             for item in response.reply.searchResult.item:
                 print(f"Title: {item.title}, Price: {item.sellingStatus.currentPrice.value}")
-                # print(f"Condition: {item.condition.conditionDisplayName}")
-                print(f"Buy it now: {item.listingInfo.buyItNowAvailable}")
-                print(f"Country: {item.country}")
-                print(f"End time: {item.listingInfo.endTime}")
-                print(f"URL: {item.viewItemURL}")
+                # # print(f"Condition: {item.condition.conditionDisplayName}")
+                # print(f"Buy it now: {item.listingInfo.buyItNowAvailable}")
+                # print(f"Country: {item.country}")
+                # print(f"End time: {item.listingInfo.endTime}")
+                # print(f"URL: {item.viewItemURL}")
+                print(f"{item.shippingInfo.shippingServiceCost.value}")
                 try:
                     print(f"Watchers: {item.listingInfo.watchCount}\n")
                 except:
@@ -44,5 +45,5 @@ class ebay_api(object):
 if __name__ == "__main__":
     st = sys.argv[1]
     e = ebay_api(API_KEY, st)
-    print("testing stuff out", e.fetch())
+    e.fetch()
     e.parse()

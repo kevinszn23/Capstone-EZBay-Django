@@ -1,3 +1,4 @@
+from pipes import Template
 from django.shortcuts import render
 from .models import Listing
 from django.views import View
@@ -32,7 +33,7 @@ class ListingsList(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         name = self.request.GET.get("name")
-        print("testing name", name)
+        # print("testing name", name)
         if name == None:
             # context["listings"] = Listing.objects.filter(name__icontains=name, user=self.request.user)
             #api call here, set value here ^^^
@@ -92,6 +93,9 @@ class ebay_api(object):
 #     e = ebay_api(API_KEY, st)
 #     e.fetch()
 #     e.parse()
+
+class ListingsItemId(TemplateView):
+    template_name = "listings_itemId.html"
 
 class ListingsCreate(CreateView):
     model = Listing

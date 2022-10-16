@@ -17,16 +17,28 @@
 <div class="gallery">
   {% for listing in api %}
   {% comment %} <a href="{% url 'listings_detail' listing.pk %}"> {% endcomment %}
-    # remove ^^
     <div class="card">
       <div class="card-image">
         <figure class="image is-square">
           <img src="{{listing.galleryURL}}" alt="{{listing.title}}" />
-          # conditional needed for any attributes that might not be coming in from the API query
+          {% comment %} conditional needed for any attributes that might not be coming in from the API query {% endcomment %}
         </figure>
       </div>
       <div class="card-header">
         <p class="card-header-title">{{listing.title}}</p>
+        <p>{{listing.condition.conditionDisplayName}}</p>
+        {% comment %} <p>{{listing.sellerInfo.feedbackScore}}</p> {% endcomment %}
+        {% comment %} <p>{{listing.listingInfo.buyItNowAvailable}}</p> {% endcomment %}
+      </div>
+      <div>
+      <p>{{listing.sellingStatus.currentPrice.value}}</p>
+
+      {% if listing.listingInfo.bestOfferEnabled == "true" %}
+      Buy it Now
+      {% endif %}
+      <p>+ {{listing.shippingInfo.shippingServiceCost.value}} shipping</p>
+      
+      
       </div>
     </div>
   {% comment %} </a> {% endcomment %}
