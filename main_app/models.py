@@ -16,6 +16,7 @@ class Listing(models.Model):
     authenticity = models.TextField(max_length=500, default="This item is verified by professionally trained authenticators before delivery")
     money_back = models.TextField(max_length=500, default="Get the item you ordered or get your money back.")
     seller_information = models.TextField(max_length=500, default="codingconnoseiur23 (999 ✭), 99.3% Positive feedback")
+    bio = models.TextField(max_length=500, default="This item is super useful")
     created_at = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
     

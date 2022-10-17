@@ -149,3 +149,6 @@ class Signup(View):
         else:
             context = {"form": form}
             return render(request, "registration/signup.html", context)
+
+def shows_slides(request):
+    return render(request, "home.html")

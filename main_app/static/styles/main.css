@@ -1,13 +1,30 @@
+html,
 body {
-    background-color: #121212;
+    background-color: white;
     color: #ffffff;
     min-height: 100vh;
   }
+
+.about-img {
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.about-p {
+  font-size: 23px;
+}
+
+.title-about {
+  font-size: 30px;
+}
   
   h1,
   h2,
   h3 {
-    color: #ffffff;
+    color: black;
+    /* border: 1px solid red */
+    font-family: 'Anton', sans-serif;
   }
   
   .container {
@@ -15,8 +32,11 @@ body {
     padding-right: 0;
   }
   
-  .title {
-    color: #ffffff;
+  h1.title {
+    font-size: 20px;
+    /* display: flex;
+    justify-content: flex-end; */
+    /* margin-top: -300px; */
   }
   
   .gallery {
@@ -45,30 +65,29 @@ body {
     top: 0;
     width: 100%;
     height: 500px;
-    background-color: #ffffff;
     overflow: hidden;
+    /* margin-left: 20px; */
   }
   
   .detail__img::after {
     content: "";
     background-image: linear-gradient(transparent 60%, #1f1f1f);
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
+   
   }
   
   img {
-    width: 100%;
-    height: 500px;
+    width: 300px;
     object-fit: cover;
     object-position: top;
+    /* border: 1px solid red */
+    border-radius:20px;
+    padding-top: 10px;
   }
   
   .detail__name {
-    position: absolute;
+    position: relative;
+    margin-left: 300px;
+    margin-top: -200px;
     z-index: 5;
     top: 400px;
   }
@@ -76,3 +95,33 @@ body {
   .detail__container {
     margin-top: 500px;
   }
+
+  .exact-listing-img {
+    width: 100%;
+    height: 500px;
+    object-fit: none;
+    /* object-position:center; */
+    margin-left: 100px;
+    /* border-radius: 5px; */
+  }
+
+.buttons {
+  margin: 300px;
+}
+
+.ebay-navbar-container {
+  color:black
+}
+
+.p-home {
+  color:black
+}
+
+.p-detail {
+  color: black
+}
+
+.p-about {
+  color: black;
+  font-size: 23px;
+}
