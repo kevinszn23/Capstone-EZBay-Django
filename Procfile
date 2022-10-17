@@ -1,1 +1,1 @@
-web: gunicorn ebay-django.wsgi
+web: gunicorn eBay_project.wsgi
