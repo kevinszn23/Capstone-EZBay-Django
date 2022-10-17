@@ -15,7 +15,7 @@ from django.utils.decorators import method_decorator
 import os
 import datetime
 import sys
-import requests
+# import requests
 from ebaysdk.finding import Connection
 from ebaysdk.exception import ConnectionError
 

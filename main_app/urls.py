@@ -11,6 +11,5 @@ urlpatterns = [
     path('listings/<int:pk>/delete',views.ListingsDelete.as_view(), name="listings_delete"),
     path('accounts/signup/', views.Signup.as_view(), name="signup"),
     # path('listings/itemId/', views.itemId, name="listings_itemId"),
-    path('accounts/signup/', views.Signup.as_view(), name="signup"),
     # path('', views.shows_slides)
 ]
