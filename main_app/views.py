@@ -12,11 +12,6 @@ from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import redirect, render
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
-import os
-import datetime
-import sys
-from ebaysdk.finding import Connection
-from ebaysdk.exception import ConnectionError
 
 # Create your views here.
 
